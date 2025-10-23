@@ -35,6 +35,7 @@ git clone https://github.com/karthikeyan80/Employee-management-system.git
 cd Employee-management-system
 
 ```
+
 2. Setup MySQL Database
 
 Open MySQL Workbench or command line.
@@ -45,7 +46,7 @@ CREATE DATABASE employeedb;
 
 
 Create employee table:
-
+```
 CREATE TABLE `employee` (
   `employeeId` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) DEFAULT NULL,
@@ -57,16 +58,24 @@ CREATE TABLE `employee` (
   `image` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`employeeId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+```
+
+
+---
 
 3. Configure Environment Variables
 
 Create a .env file in the server folder:
 
+```
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=your_mysql_password
 DB_DATABASE=employeedb
 PORT=5000
+```
+---
+
 
 4. Install Dependencies
 
@@ -79,17 +88,24 @@ Frontend
 
 cd client > npm install
 
+---
+
 5. Run the Project
 
-Backend
+#Backend
 
-cd server > npm start
+```
+cd server
+npm start
+```
 
 
-Frontend
+#Frontend
 
-cd client > npm run dev
-
+```
+cd client
+npm run dev
+```
 
 Frontend runs at: http://localhost:5000
 
