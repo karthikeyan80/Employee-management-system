@@ -43,7 +43,7 @@ const AddEmployee=()=> {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen p-2">
       {/* Top Bar */}
       <div className="flex items-center gap-3 mb-8">
         <i
@@ -66,7 +66,7 @@ const AddEmployee=()=> {
       {/* Form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-xl p-6 max-w-6xl mx-auto"
+        className="bg-white p-6 max-w-6xl mx-auto"
       >
         {/* Image Upload */}
         <div className="mb-6 flex items-center gap-6">
@@ -79,7 +79,7 @@ const AddEmployee=()=> {
           ) : (
             <label
               htmlFor="imageUpload"
-              className="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-full cursor-pointer hover:border-blue-500 transition"
+              className="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition"
             >
               <i className="bi bi-camera text-gray-400 text-3xl"></i>
               <input

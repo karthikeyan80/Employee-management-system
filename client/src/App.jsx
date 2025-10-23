@@ -1,4 +1,3 @@
-import React from "react";
 import Sidebar from "./Components/Sidebar";
 import Header from "./Components/Header";
 import { Route, Routes } from "react-router-dom";
@@ -19,7 +18,7 @@ const App = () => {
         <Header />
 
         {/* Page content */}
-        <div className="flex-1 p-4 overflow-auto">
+        <div className="flex-1 p-4">
           <Routes>
             <Route path="/" element={<EmployeeTable />} />
             <Route path="/add" element={<AddEmployee />} />

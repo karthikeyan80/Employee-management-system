@@ -21,7 +21,7 @@ const Sidebar = () => {
         </div>
 
         {/* Vertical line next to sidebar */}
-        <div className="absolute top-0 right-0 h-full w-0.5 bg-gray-300"></div>
+        <div className="absolute top-0 right-0 h-[120vh] w-0.5 bg-gray-300"></div>
       </div>
 
       {/* Main content placeholder */}
