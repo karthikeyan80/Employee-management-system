@@ -1,4 +1,7 @@
+# Environment
 server/.env
-node_modules
+
+# Node modules (ignore all)
+node_modules/
 client/node_modules/
 server/node_modules/
