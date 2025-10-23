@@ -40,12 +40,14 @@ cd Employee-management-system
 
 Open MySQL Workbench or command line.
 
-Create a new database:
-
+#Create a new database:
+```
 CREATE DATABASE employeedb;
+```
 
 
-Create employee table:
+#Create employee table:
+
 ```
 CREATE TABLE `employee` (
   `employeeId` int(11) NOT NULL AUTO_INCREMENT,
@@ -65,7 +67,7 @@ CREATE TABLE `employee` (
 
 3. Configure Environment Variables
 
-Create a .env file in the server folder:
+#Create a .env file in the server folder:
 
 ```
 DB_HOST=localhost
@@ -79,12 +81,12 @@ PORT=5000
 
 4. Install Dependencies
 
-Backend
+#Backend
 
 cd server > npm install
 
 
-Frontend
+#Frontend
 
 cd client > npm install
 
