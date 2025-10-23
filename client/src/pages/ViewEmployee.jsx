@@ -30,7 +30,7 @@ const ViewEmployee = () => {
   ];
 
   return (
-    <div className="p-6 bg-white max-w-7xl mx-auto mt-8">
+    <div className="p-6 bg-white max-w-7xl mx-auto mt-0">
       {/* Top Bar */}
       <div className="flex items-center mb-6">
         <button
@@ -53,7 +53,7 @@ const ViewEmployee = () => {
       </div>
 
       {/* Section Title */}
-      <div className="flex items-center gap-1 ml-6 underline text-blue-600 mb-8">
+      <div className="flex items-center ml-6 gap-2 mt-4 mb-6 text-2xl underline text-blue-600">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-5 h-5 text-blue-600"
@@ -68,10 +68,10 @@ const ViewEmployee = () => {
             d="M5.121 17.804A3 3 0 017 17h10a3 3 0 012.879 2.804A9.99 9.99 0 0112 22a9.99 9.99 0 01-6.879-4.196zM15 10a3 3 0 11-6 0 3 3 0 016 0z"
           />
         </svg>
-        <span className="text-lg font-medium">Personal Information</span>
+        <span className="font-medium">Personal Information</span>
        
       </div>
-       <hr className="border border-gray-400 mb-5 mt--5" />
+       
 
       {/* Employee Image */}
       <div className="mb-6">

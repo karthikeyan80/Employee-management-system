@@ -5,6 +5,7 @@ import axios from "axios";
 const EditEmployee = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [preview, setPreview] = useState(''); // store preview URL
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,6 +17,12 @@ const EditEmployee = () => {
     status: "",
     image: null,
   });
+
+  useEffect(() => {
+  return () => {
+    if (preview) URL.revokeObjectURL(preview);
+  };
+}, [preview]);
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -39,14 +46,15 @@ const EditEmployee = () => {
     fetchEmployee();
   }, [id]);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
-  };
-
+const handleChange = (e) => {
+  const { name, value, files } = e.target;
+  if (files) {
+    setFormData({ ...formData, [name]: files[0] });
+    setPreview(URL.createObjectURL(files[0])); // set preview
+  } else {
+    setFormData({ ...formData, [name]: value });
+  }
+};
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedForm = new FormData();
@@ -68,7 +76,7 @@ const EditEmployee = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+    <div className="p-6 bg-white max-w-7xl mx-auto mt-0">
       {/* Top Bar */}
       <div className="flex items-center mb-6">
         <button
@@ -85,21 +93,34 @@ const EditEmployee = () => {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Image Upload */}
-        <div className="flex justify-center mb-6">
-          <label
-            htmlFor="imageUpload"
-            className="cursor-pointer flex flex-col items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-500 transition"
-          >
-            <i className="bi bi-camera text-3xl text-gray-400"></i>
-            <p className="text-gray-500 text-sm mt-2">Upload</p>
-            <input
-              type="file"
-              id="imageUpload"
-              name="image"
-              onChange={handleChange}
-              hidden
-            />
-          </label>
+        <div className="flex justify-start ml-4 mb-6">
+         <label
+  htmlFor="imageUpload"
+  className="cursor-pointer flex flex-col items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-500 transition relative"
+>
+  {/* Preview image */}
+  {preview || formData.currentImageURL ? (
+    <img
+      src={preview || formData.currentImageURL}
+      alt="Employee"
+      className="w-32 h-32 object-cover rounded-xl absolute top-0 left-0"
+    />
+  ) : (
+    <>
+      <i className="bi bi-camera text-3xl text-gray-400"></i>
+      <p className="text-gray-500 text-sm mt-2">Upload new image</p>
+    </>
+  )}
+
+  <input
+    type="file"
+    id="imageUpload"
+    name="image"
+    onChange={handleChange}
+    hidden
+  />
+</label>
+
         </div>
 
         {/* Form Fields */}

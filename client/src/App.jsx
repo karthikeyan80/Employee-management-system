@@ -8,7 +8,7 @@ import EditEmployee from "./pages/EditEmployee";
 
 const App = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-x-hidden">
       {/* Sidebar */}
       <Sidebar />
 

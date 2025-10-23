@@ -13,7 +13,7 @@ const Sidebar = () => {
           <p className="text-2xl font-bold text-blue-600 ml-6">RS - TECH</p>
         </div>
         <hr className="text-gray-400 min-w-screen" />
-        <div className="mt-8 font-black opacity-50 space-y-8 ml-8">
+        <div className="mt-8 font-black space-y-8 ml-8">
           <Dashboard />
           <Employee />
           <Calendar />

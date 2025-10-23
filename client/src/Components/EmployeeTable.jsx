@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Modal from "./modals/Modal";
+import search from "../assets/search.png"
 
 const EmployeeTable = () => {
   const navigate = useNavigate();
@@ -54,13 +55,21 @@ const EmployeeTable = () => {
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <h2 className="text-2xl font-semibold text-gray-800">Employee</h2>
         <div className="flex items-center gap-3 w-full md:w-auto">
-          <input
-            type="search"
-            placeholder="Search Employee"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-          />
+          <div className="relative w-full md:w-64">
+  <img
+    src={search}
+    alt="Search"
+    className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+  />
+  <input
+    type="search"
+    placeholder="Search Employee"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+  />
+</div>
+
           <button
             onClick={() => navigate("/add")}
             className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
@@ -81,7 +90,7 @@ const EmployeeTable = () => {
       </div>
 
       {/* Employee Table */}
-      <div className="mt-8 overflow-x-auto bg-white rounded-xl border border-gray-400 shadow-md">
+      <div className="mt-8 overflow-x-auto bg-white rounded-sm border border-gray-400">
         <table className="w-full text-left border-collapse">
           <thead className="border-b border-gray-400">
             <tr>
@@ -107,7 +116,7 @@ const EmployeeTable = () => {
           <tbody>
             {filteredEmployees.length > 0 ? (
               filteredEmployees.map((emp, index) => (
-                <tr key={index} className="border-b hover:bg-gray-50 transition">
+                <tr key={index} className="border-b border-gray-400 hover:bg-gray-50 transition">
                   <td className="flex items-center gap-3 px-4 py-3">
                     <img
                       src={emp.imageURL || "https://via.placeholder.com/40"}
