@@ -31,8 +31,8 @@ A simple **CRUD application** built with **React, Node.js, Express, and MySQL**,
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/employee-management-system.git
-cd employee-management-system
+git clone https://github.com/karthikeyan80/Employee-management-system.git
+cd Employee-management-system
 
 ```
 2. Setup MySQL Database
