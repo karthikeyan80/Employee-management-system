@@ -1,153 +1,191 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Modal from "../Components/Modals";
+import Modal from "./modals/Modal"
 
-const EmployeeTable = () => {
+const EmployeeTable=()=> {
   const navigate = useNavigate();
-  const [employees, setEmployees] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [employee, setEmployee] = useState([]);
+  const [isModal, setModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteId, setDeleteId] = useState(null);
 
-  // Fetch employees
   useEffect(() => {
-    const fetchEmployees = async () => {
+    const fetchEmployee = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/employee");
-        setEmployees(response.data.formattedResults);
+        setEmployee(response.data.formattedResults || []);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching employees:", error);
       }
     };
-    fetchEmployees();
+    fetchEmployee();
   }, []);
 
-  // Delete employee
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:5000/api/employee/${deleteId}`);
-      setEmployees((prev) => prev.filter((emp) => emp.employeeId !== deleteId));
+      setEmployee((prev) => prev.filter((emp) => emp.employeeId !== deleteId));
       setModalOpen(false);
       setDeleteId(null);
     } catch (error) {
-      console.error("Delete failed", error);
+      console.error("Delete failed:", error);
     }
   };
 
-  // Filtered employees for search
-  const filteredEmployees = employees.filter(
-    (emp) =>
-      emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emp.employeeId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emp.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emp.designation.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emp.project.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emp.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      emp.status.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredEmployees = employee.filter((emp) =>
+    [
+      emp.name,
+      emp.employeeId?.toString(),
+      emp.department,
+      emp.designation,
+      emp.project,
+      emp.type,
+      emp.status,
+    ]
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="p-6 space-y-6">
-      {/* Header + Search */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-        <h2 className="text-2xl font-bold">Employee</h2>
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center">
+    <div className="p-6">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <h2 className="text-2xl font-semibold text-gray-800">Employee</h2>
+        <div className="flex items-center gap-3 w-full md:w-auto">
           <input
             type="search"
             placeholder="Search Employee"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-4 py-2 border rounded-md w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
           />
           <button
             onClick={() => navigate("/add")}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
           >
-            <i className="bi bi-plus-circle"></i>
-            <span>Add New Employee</span>
+            <i className="bi bi-plus-circle text-lg"></i>
+            <span className="ml-2">Add New</span>
           </button>
         </div>
       </div>
 
       {/* Employee Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300 rounded-lg divide-y divide-gray-200">
-          <thead className="bg-gray-100">
+      <div className="mt-8 overflow-x-auto bg-white rounded-xl shadow-md">
+        <table className="w-full text-left border-collapse">
+          <thead className="bg-gray-100 border-b">
             <tr>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Employee Name</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Employee ID</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Department</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Designation</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Project</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Type</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Status</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Action</th>
+              {[
+                "Employee Name",
+                "Employee ID",
+                "Department",
+                "Designation",
+                "Project",
+                "Type",
+                "Status",
+                "Action",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  className="px-4 py-3 text-sm font-medium text-gray-600"
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
-            {filteredEmployees.map((emp) => (
-              <tr key={emp.employeeId} className="hover:bg-gray-50">
-                <td className="px-4 py-2 flex items-center gap-2">
-                  <img
-                    src={emp.imageURL || "https://via.placeholder.com/40"}
-                    alt="employee"
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <span className="text-sm font-light">{emp.name}</span>
-                </td>
-                <td className="px-4 py-2 text-sm font-light">{emp.employeeId || "N/A"}</td>
-                <td className="px-4 py-2 text-sm font-light">{emp.department}</td>
-                <td className="px-4 py-2 text-sm font-light">{emp.designation}</td>
-                <td className="px-4 py-2 text-sm font-light">{emp.project}</td>
-                <td className="px-4 py-2 text-sm font-light">{emp.type}</td>
-                <td className="px-4 py-2 text-sm font-light">{emp.status}</td>
-                <td className="px-4 py-2 flex gap-2">
-                  <button onClick={() => navigate(`/view/${emp.employeeId}`)} className="p-2 hover:bg-gray-200 rounded">
-                    <i className="bi bi-eye"></i>
-                  </button>
-                  <button onClick={() => navigate(`/update/${emp.employeeId}`)} className="p-2 hover:bg-gray-200 rounded">
-                    <i className="bi bi-pencil-square"></i>
-                  </button>
-                  <button
-                    onClick={() => {
-                      setDeleteId(emp.employeeId);
-                      setModalOpen(true);
-                    }}
-                    className="p-2 hover:bg-red-100 text-red-600 rounded"
-                  >
-                    <i className="bi bi-trash"></i>
-                  </button>
+          <tbody>
+            {filteredEmployees.length > 0 ? (
+              filteredEmployees.map((emp, index) => (
+                <tr
+                  key={index}
+                  className="border-b hover:bg-gray-50 transition"
+                >
+                  <td className="flex items-center gap-3 px-4 py-3">
+                    <img
+                      src={emp.imageURL || "https://via.placeholder.com/40"}
+                      alt="employee"
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                    <span className="text-gray-700">{emp.name}</span>
+                  </td>
+                  <td className="px-4 py-3 text-gray-600">{emp.employeeId}</td>
+                  <td className="px-4 py-3 text-gray-600">{emp.department}</td>
+                  <td className="px-4 py-3 text-gray-600">{emp.designation}</td>
+                  <td className="px-4 py-3 text-gray-600">{emp.project}</td>
+                  <td className="px-4 py-3 text-gray-600">{emp.type}</td>
+                  <td className="px-4 py-3 text-gray-600">{emp.status}</td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() =>
+                          navigate(`/view/${emp.employeeId}`)
+                        }
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        <i className="bi bi-eye"></i>
+                      </button>
+                      <button
+                        onClick={() =>
+                          navigate(`/update/${emp.employeeId}`)
+                        }
+                        className="text-green-500 hover:text-green-700"
+                      >
+                        <i className="bi bi-pencil-square"></i>
+                      </button>
+                      <button
+                        onClick={() => {
+                          setDeleteId(emp.employeeId);
+                          setModalOpen(true);
+                        }}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="8"
+                  className="text-center text-gray-500 py-6 text-sm"
+                >
+                  No employees found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Delete Modal */}
-      <Modal show={isModalOpen} onClose={() => setModalOpen(false)}>
-        <div className="flex flex-col items-center text-center gap-4">
-          <i className="bi bi-trash text-blue-600" style={{ fontSize: "50px" }}></i>
-          <p>Are you sure you want to delete this employee?</p>
-          <div className="flex gap-4 mt-4 w-full">
+      <Modal show={isModal} onClose={() => setModalOpen(false)}>
+        <div className="flex flex-col items-center text-center">
+          <i className="bi bi-trash text-red-500 text-4xl mb-3"></i>
+          <p className="text-gray-700 mb-4">
+            Are you sure you want to delete this employee?
+          </p>
+          <div className="flex gap-3 w-full">
             <button
-              className="flex-1 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
               onClick={() => setModalOpen(false)}
+              className="w-1/2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
             >
               Cancel
             </button>
             <button
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               onClick={handleDelete}
+              className="w-1/2 px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
             >
-              Yes
+              Yes, Delete
             </button>
           </div>
         </div>
       </Modal>
     </div>
   );
-};
+}
 
 export default EmployeeTable;
