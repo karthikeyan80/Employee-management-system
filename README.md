@@ -72,27 +72,23 @@ PORT=5000
 
 Backend
 
-cd server
-npm install
+cd server > npm install
 
 
 Frontend
 
-cd ../client
-npm install
+cd client > npm install
 
 5. Run the Project
 
 Backend
 
-cd server
-npm start
+cd server > npm start
 
 
 Frontend
 
-cd client
-npm run dev
+cd client > npm run dev
 
 
 Frontend runs at: http://localhost:5000
