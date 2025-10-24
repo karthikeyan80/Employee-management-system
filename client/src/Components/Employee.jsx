@@ -1,4 +1,3 @@
-import React from "react";
 import group from "../assets/group.png";
 
 const Employee = () => {

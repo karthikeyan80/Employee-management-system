@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -55,6 +55,7 @@ const AddEmployee=()=> {
         </h2>
       </div>
 
+
       {/* Section Header */}
        <div className="flex items-center ml-6 gap-2 mt-4 mb-6 text-2xl underline text-blue-600">
         <i className="bi bi-person-fill text-blue-500 text-lg"></i>
@@ -63,11 +64,15 @@ const AddEmployee=()=> {
         </span>
       </div>
 
+
+
       {/* Form */}
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 max-w-6xl mx-auto"
       >
+
+
         {/* Image Upload */}
         <div className="mb-6 flex items-center gap-6">
           {formData.image ? (
@@ -96,7 +101,8 @@ const AddEmployee=()=> {
           </p>
         </div>
 
-        {/* Input Grid */}
+  
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name */}
           <div>
@@ -212,6 +218,7 @@ const AddEmployee=()=> {
             </select>
           </div>
         </div>
+        
 
         {/* Buttons */}
         <div className="flex justify-end gap-3 mt-8">

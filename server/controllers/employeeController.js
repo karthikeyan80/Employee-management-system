@@ -116,3 +116,4 @@ export const deleteEmployee = async (req, res) => {
     res.status(200).json({ message: "Employee deleted successfully" });
   });
 };
+

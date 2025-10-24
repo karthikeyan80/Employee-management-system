@@ -1,4 +1,3 @@
-import React from 'react'
 import calendar from "../assets/calendar.png"
 const Calendar = () => {
   return (

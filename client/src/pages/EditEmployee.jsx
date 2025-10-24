@@ -90,14 +90,18 @@ const handleChange = (e) => {
         </h3>
       </div>
 
+
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
+
         {/* Image Upload */}
         <div className="flex justify-start ml-4 mb-6">
          <label
   htmlFor="imageUpload"
   className="cursor-pointer flex flex-col items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-500 transition relative"
 >
+
+  
   {/* Preview image */}
   {preview || formData.currentImageURL ? (
     <img

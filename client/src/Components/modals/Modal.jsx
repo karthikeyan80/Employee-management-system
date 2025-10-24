@@ -1,5 +1,4 @@
-// Modal.js
-export default function Modal({ show, onClose, title, children }) {
+const Modal = ({ show, onClose, title, children })=> {
   if (!show) return null;
 
   return (
@@ -30,3 +29,5 @@ const modalStyle = {
   width: '500px',
   boxShadow: '0 0 10px rgba(0,0,0,0.25)',
 };
+
+export default Modal;

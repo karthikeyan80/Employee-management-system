@@ -1,4 +1,3 @@
-import React from 'react'
 import gear from "../assets/gear.png"
 import bell from "../assets/bell.png"
 import user from "../assets/user.png"
